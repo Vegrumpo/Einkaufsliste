@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Einkaufsdatenbank</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Einkaufsdatenbank</h1>
+
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <button class="open-modal" data-modal-target="modalArtikel">Artikel verwalten</button>
+        <button class="open-modal" data-modal-target="modalSupermarkt">Supermärkte verwalten</button>
+        <button class="open-modal" data-modal-target="modalKategorien">Kategorien verwalten</button>
+        <button class="open-modal" data-modal-target="modalPreise">Preise verwalten</button>
+        <button class="open-modal" data-modal-target="modalAngebote">Angebote verwalten</button>
+    </div>
+
+    <!-- Einkaufszettel-Bereich -->
+    <section id="einkaufszettelSection">
+        <h2>Einkaufszettel</h2>
+<form id="einkaufszettelForm">
+    <label for="menge">Menge:</label>
+    <input type="number" id="menge" min="1" required />
+
+    <label for="marke">Marke:</label>
+    <select id="marke" required>
+        <option value="">Marke auswählen</option>
+    </select>
+
+    <label for="artikel">Artikel:</label>
+    <select id="artikel" required>
+        <option value="">Artikel auswählen</option>
+    </select>
+
+    <button id="direktHinzufuegenButton" type="button">Artikel hinzufügen</button>
+    <button id="vorschlagHinzufuegenButton" type="button">Artikel mit Vorschlag hinzufügen</button>
+</form>
+
+
+        <div id="einkaufszettelListen">
+            <!-- Hier werden die Listen pro Supermarkt angezeigt -->
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button id="bereinigenButton">Erledigte Artikel entfernen</button>
+			<button id="einkaufszettelLeerenButton">Einkaufszettel leeren</button>
+
+        </div>
+    </section>
+
+    <!-- Modal-Bereiche -->
+    <div class="modal-overlay" id="modalArtikel">
+        <div class="modal">
+            <h2>Artikel verwalten</h2>
+            <form id="artikelForm">
+                <label for="artikelMarke">Marke:</label>
+                <input type="text" id="artikelMarke" name="artikelMarke" required>
+                <label for="artikelName">Name:</label>
+                <input type="text" id="artikelName" name="artikelName" required>
+                <label for="artikelKategorie">Kategorie:</label>
+                <select id="artikelKategorie" name="artikelKategorie" required></select>
+                <button type="submit">Hinzufügen</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Marke</th>
+                        <th>Name</th>
+                        <th>Kategorie</th>
+                        <th>Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody id="artikelListe"></tbody>
+            </table>
+            <button class="close-modal">Schließen</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalSupermarkt">
+        <div class="modal">
+            <h2>Supermärkte verwalten</h2>
+            <form id="supermarktForm">
+                <label for="supermarktName">Name:</label>
+                <input type="text" id="supermarktName" name="supermarktName" required>
+                <label for="supermarktAdresse">Adresse:</label>
+                <input type="text" id="supermarktAdresse" name="supermarktAdresse" required>
+                <label for="supermarktOeffnungszeiten">Öffnungszeiten:</label>
+                <input type="text" id="supermarktOeffnungszeiten" name="supermarktOeffnungszeiten" required>
+                <button type="submit">Hinzufügen</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Adresse</th>
+                        <th>Öffnungszeiten</th>
+                        <th>Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody id="supermarktListe"></tbody>
+            </table>
+            <button class="close-modal">Schließen</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalKategorien">
+        <div class="modal">
+            <h2>Kategorien verwalten</h2>
+            <form id="kategorieForm">
+                <label for="kategorieName">Kategoriename:</label>
+                <input type="text" id="kategorieName" name="kategorieName" required>
+                <button type="submit">Hinzufügen</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody id="kategorieListe"></tbody>
+            </table>
+            <button class="close-modal">Schließen</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalPreise">
+        <div class="modal">
+            <h2>Reguläre Preise verwalten</h2>
+            <form id="preiseForm">
+                <label for="preiseMarke">Marke:</label>
+                <select id="preiseMarke" name="preiseMarke" required>
+                    <option value="">Marke auswählen</option>
+                </select>
+
+                <label for="preiseArtikel">Artikel:</label>
+                <select id="preiseArtikel" name="preiseArtikel" required>
+                    <option value="">Bitte zuerst Marke auswählen</option>
+                </select>
+
+                <label for="preiseSupermarkt">Supermarkt:</label>
+                <select id="preiseSupermarkt" name="preiseSupermarkt" required></select>
+
+                <label for="regulaererPreis">Regulärer Preis:</label>
+                <input type="number" id="preiseRegulaer" name="preiseRegulaer" step="0.01" required />
+
+                <button type="submit">Hinzufügen</button>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Marke</th>
+                        <th>Artikel</th>
+                        <th>Supermarkt</th>
+                        <th>Regulärer Preis</th>
+                        <th>Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody id="preiseListe"></tbody>
+            </table>
+
+            <button class="close-modal">Schließen</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalAngebote">
+        <div class="modal">
+            <h2>Angebote verwalten</h2>
+            <form id="angeboteForm">
+                <label for="angeboteMarke">Marke:</label>
+                <select id="angeboteMarke" required>
+                    <option value="">Marke auswählen</option>
+                </select>
+
+                <label for="angeboteArtikel">Artikel:</label>
+                <select id="angeboteArtikel" required>
+                    <option value="">Bitte zuerst Marke auswählen</option>
+                </select>
+
+                <label for="angeboteSupermarkt">Supermarkt:</label>
+                <select id="angeboteSupermarkt" required>
+                    <option value="">Supermarkt auswählen</option>
+                </select>
+
+                <label for="angebotePreis">Angebotspreis (€):</label>
+                <input type="text" id="angebotePreis" required>
+
+                <label for="angeboteGueltigBis">Gültig bis:</label>
+                <input type="date" id="angeboteGueltigBis" required>
+
+                <button type="submit">Hinzufügen</button>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Marke</th>
+                        <th>Artikel</th>
+                        <th>Supermarkt</th>
+                        <th>Angebotspreis</th>
+                        <th>Gültig bis</th>
+                        <th>Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody id="angeboteListe"></tbody>
+            </table>
+
+            <button class="close-modal">Schließen</button>
+        </div>
+    </div>
+
+    <script type="module" src="js/api.js"></script>
+    <script type="module" src="js/artikel.js"></script>
+    <script type="module" src="js/supermaerkte.js"></script>
+    <script type="module" src="js/kategorien.js"></script>
+    <script type="module" src="js/preise.js"></script>
+    <script type="module" src="js/angebote.js"></script>
+    <script type="module" src="js/einkaufszettel.js"></script>
+    <script type="module" src="js/modals.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
